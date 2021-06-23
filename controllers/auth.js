@@ -1,8 +1,21 @@
 // Always keep the name of your controller same as your routes
 
+// name it same as it was export.. not necessory but its a good practice
+const User = require("../models/user");
+
 exports.signup = (req, res) => {
-  res.json({
-    message: "Sign up works!!",
+  const user = new User(req.body);
+  user.save((err, user) => {
+    if (err) {
+      return res.status(400).json({
+        err: "NOT able to save user in DB",
+      });
+    }
+    res.json({
+      name: user.name,
+      email: user.email,
+      id: user._id,
+    });
   });
 };
 
