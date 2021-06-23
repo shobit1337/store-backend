@@ -3,6 +3,11 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
+var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
+var cors = require("cors");
+
+const authRoutes = require("./routes/auth");
 
 mongoose
   .connect(process.env.DATABASE_URI, {
@@ -17,6 +22,15 @@ mongoose
     console.log("DB CONNECTION FAILED!");
   });
 
+// Middleware
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(cors());
+
+// My Routes
+app.use("/api", authRoutes);
+
+// PORT
 const port = process.env.PORT || 1337;
 
 app.listen(port, () => {
