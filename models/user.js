@@ -52,13 +52,13 @@ userSchema
   });
 
 // Schema Methods - Create as much you want..
-userSchema.method = {
+userSchema.methods = {
   authenticate: function (plainPassword) {
     return this.encrptPassword(plainPassword) === this.encrpt_password;
   },
 
   encrptPassword: function (plainPassword) {
-    if (!password) return "";
+    if (!plainPassword) return "";
     try {
       return crypto
         .createHmac("sha256", this.salt)
