@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 var bodyParser = require("body-parser");
+// cookie-parser helps us to create or put some values to the cookies or delete some value from cookies
 var cookieParser = require("cookie-parser");
 var cors = require("cors");
 
