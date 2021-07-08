@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const { check } = require("express-validator");
-const { signout, signup } = require("../controllers/auth");
+const { signout, signup, signin } = require("../controllers/auth");
 
 // we apply express-validator after the routes and before the controllers
 router.post(
@@ -19,6 +19,18 @@ router.post(
   ],
   signup
 );
+
+router.post(
+  "/signin",
+  [
+    check("email", "Email is required!").isEmail(),
+    check("password", "Password is Required!").isLength({
+      min: 1,
+    }),
+  ],
+  signin
+);
+
 router.get("/signout", signout);
 
 module.exports = router;
