@@ -71,3 +71,31 @@ exports.signout = (req, res) => {
     message: "User Successfully Signout!",
   });
 };
+
+// Protected Routes
+exports.isSignedIn = expressJwt({
+  // This is a middleware comming from express-jwt, It checks for tokken wether you are already signed in or not
+  secret: process.env.SECRET,
+  userProperty: "auth",
+});
+
+// Custom middleware
+
+exports.isAuthenticated = (req, res, next) => {
+  let checker = req.profile && req.auth && req.profile._id === req.auth.id; // auth we will get from isSignedIn Route and profile we will get from frontend.
+  if (!checker) {
+    return res.status(403).json({
+      error: "ACCESS DENIED",
+    });
+  }
+  next();
+};
+
+exports.isAdmin = (req, res, next) => {
+  if (req.profile.role === 0) {
+    return res.status(403).json({
+      error: "YOU ARE NOT AN ADMIN",
+    });
+  }
+  next();
+};
