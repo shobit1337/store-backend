@@ -56,15 +56,14 @@ exports.updateCategory = (req, res) => {
 exports.deleteCategory = (req, res) => {
   const category = req.category;
 
-  category.remove((err, category) => {
+  category.remove((err, deletedCategory) => {
     if (err) {
       return res.status(400).json({
-        // TODO: add backticks
-        error: "Failed to delete this category",
+        error: `Failed to delete "${category.name}" category.`,
       });
     }
     res.json({
-      message: "Succefully delted!",
+      message: `Succefully deleted "${category.name}!" category.`,
     });
   });
 };
