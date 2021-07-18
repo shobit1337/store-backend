@@ -27,19 +27,30 @@ exports.createProduct = (req, res) => {
         error: "Sorry, File failed to upload",
       });
     }
-    // TODO: restrictions on field
+
+    // Destructre Fields value
+    const { name, description, price, category, stock, photo } = fields;
+
+    // Restrictions on field
+    // TODO: Instead of these restrictions on fields, Use express validations
+    if (!name || !description || !price || !category || !stock) {
+      return res.status(400).json({
+        error: "Please include all fields",
+      });
+    }
+
     let product = new Product(fields);
 
     //handle file here
-    if (file.photo) {
-      if (file.photo.size > 3000000) {
+    if (photo) {
+      if (photo.size > 3000000) {
         return res.status(400).json({
           error: "File size is more then 3mb",
         });
       }
       // TODO: Check if we are uplading image only
-      product.photo.data = fs.readFileSync(file.photo.path);
-      product.photo.contentType = file.photo.type;
+      product.photo.data = fs.readFileSync(photo.path);
+      product.photo.contentType = photo.type;
     }
 
     // Save to db
