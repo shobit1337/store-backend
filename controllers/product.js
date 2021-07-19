@@ -29,7 +29,7 @@ exports.createProduct = (req, res) => {
     }
 
     // Destructre Fields value
-    const { name, description, price, category, stock, photo } = fields;
+    const { name, description, price, category, stock } = fields;
 
     // Restrictions on field
     // TODO: Instead of these restrictions on fields, Use express validations
@@ -41,16 +41,16 @@ exports.createProduct = (req, res) => {
 
     let product = new Product(fields);
 
-    //handle file here
-    if (photo) {
-      if (photo.size > 3000000) {
+    // handling file here
+    if (file.photo) {
+      if (file.photo.size > 3000000) {
         return res.status(400).json({
           error: "File size is more then 3mb",
         });
       }
       // TODO: Check if we are uplading image only
-      product.photo.data = fs.readFileSync(photo.path);
-      product.photo.contentType = photo.type;
+      product.photo.data = fs.readFileSync(file.photo.path);
+      product.photo.contentType = file.photo.type;
     }
 
     // Save to db
