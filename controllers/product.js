@@ -153,3 +153,24 @@ exports.getAllProducts = (req, es) => {
       res.json(products);
     });
 };
+
+// Maintaining Stock with bulk operations
+exports.updateStock = (req, res, next) => {
+  let myOperations = req.body.order.products.map((product) => {
+    return {
+      updateOne: {
+        filter: { _id: product._id },
+        update: { $inc: { stock: -product.count, sold: +product.count } },
+      },
+    };
+  });
+
+  Product.bulkWrite(myOperations, {}, (err, products) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Bulk Operation Failed.",
+      });
+    }
+    next();
+  });
+};
