@@ -14,3 +14,18 @@ exports.getOrderById = (req, res, next, id) => {
       next();
     });
 };
+
+// Create order route
+exports.createOrder = (req, res) => {
+  req.body.order.user = req.profiles;
+  const order = new Order(req.body.order);
+
+  order.save((err, order) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Failed to create your order.",
+      });
+    }
+    res.json(order);
+  });
+};
