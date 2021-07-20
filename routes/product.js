@@ -9,6 +9,7 @@ const {
   deleteProduct,
   updateProduct,
   getAllProducts,
+  getAllUniqueCategories,
 } = require("../controllers/product");
 const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
 const { getUserById } = require("../controllers/user");
@@ -47,5 +48,7 @@ router.put(
 
 // Listing Route
 router.get("/products", getAllProducts);
+
+router.get("/products/categories", getAllUniqueCategories);
 
 module.exports = router;
