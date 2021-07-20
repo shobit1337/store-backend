@@ -132,3 +132,24 @@ exports.updateProduct = (req, res) => {
     });
   });
 };
+
+// Listing route
+exports.getAllProducts = (req, es) => {
+  // Note:
+  let limit = req.query.limit ? parseInt(req.query.limit) : 8;
+  // TODO: Try more sorting ways
+  let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
+  Product.find()
+    .select("-photo") // We added - to not include it.
+    .populate("category") //TODO: Read more about populate from mongoose docs
+    .sort([[sortBy, "asc"]])
+    .limit(limit)
+    .exec((err, products) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Sorry! No product found.",
+        });
+      }
+      res.json(products);
+    });
+};
