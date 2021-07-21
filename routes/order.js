@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { getOrderById, createOrder } = require("../controllers/order");
+const {
+  getOrderById,
+  createOrder,
+  getAllOrders,
+} = require("../controllers/order");
 
 const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
 const { getUserById, pushOrderInPurchaseList } = require("../controllers/user");
@@ -19,6 +23,15 @@ router.post(
   pushOrderInPurchaseList,
   updateStock,
   createOrder
+);
+
+// Read
+router.get(
+  "/order/all/:userId",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  getAllOrders
 );
 
 module.exports = router;
