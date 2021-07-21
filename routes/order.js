@@ -5,6 +5,8 @@ const {
   getOrderById,
   createOrder,
   getAllOrders,
+  getOrderStatus,
+  updateOrderStatus,
 } = require("../controllers/order");
 
 const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
@@ -32,6 +34,22 @@ router.get(
   isAuthenticated,
   isAdmin,
   getAllOrders
+);
+
+// Status of Order
+router.get(
+  "/order/status/:userId",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  getOrderStatus
+);
+router.put(
+  "/order/:orderId/status/:userId",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  updateOrderStatus
 );
 
 module.exports = router;
