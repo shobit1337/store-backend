@@ -81,7 +81,6 @@ exports.getProductPhoto = (req, res, next) => {
 
 // Delete
 exports.deleteProduct = (req, res) => {
-  console.log(req.product);
   let product = req.product;
   product.remove((err, deletedProduct) => {
     if (err) {
