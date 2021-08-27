@@ -134,7 +134,7 @@ exports.updateProduct = (req, res) => {
 };
 
 // Listing route
-exports.getAllProducts = (req, es) => {
+exports.getAllProducts = (req, res) => {
   // Note:
   let limit = req.query.limit ? parseInt(req.query.limit) : 8;
   // TODO: Try more sorting ways
