@@ -12,7 +12,7 @@ exports.getProductById = (req, res, next, id) => {
           error: "Sorry, Product not found!",
         });
       }
-      res.json(product);
+      req.product = product;
       next();
     });
 };
@@ -81,6 +81,7 @@ exports.getProductPhoto = (req, res, next) => {
 
 // Delete
 exports.deleteProduct = (req, res) => {
+  console.log(req.product);
   let product = req.product;
   product.remove((err, deletedProduct) => {
     if (err) {
