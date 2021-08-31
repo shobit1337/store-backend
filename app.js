@@ -14,6 +14,7 @@ const userRoutes = require("./routes/user");
 const categoryRoutes = require("./routes/category");
 const productRoutes = require("./routes/product");
 const orderRoutes = require("./routes/order");
+const paymentBraintreeRoutes = require("./routes/paymentBraintreeRoutes");
 
 mongoose
   .connect(process.env.DATABASE_URI, {
@@ -39,6 +40,7 @@ app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
 app.use("/api", orderRoutes);
+app.use("/api", paymentBraintreeRoutes);
 
 // PORT
 const port = process.env.PORT || 1337;
